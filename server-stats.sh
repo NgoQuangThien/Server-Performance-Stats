@@ -11,11 +11,6 @@ percentage_memory_free=$(awk -v total=$total_memory -v free=$memory_free 'BEGIN 
 
 # Total disk usage (Free vs Used including percentage)
 read -r _ disk_size disk_used disk_free percentage_disk_used _  <<< $(df -h / | tail -n1)
-# Remove G character
-disk_size=${disk_size%G}
-disk_used=${disk_used%G}
-disk_free=${disk_free%G}
-
 percentage_disk_free="$(awk -v used=$percentage_disk_used 'BEGIN {printf "%.0f", 100 - used}')%"
 
 # Top 5 processes by CPU usage
@@ -34,8 +29,8 @@ echo "Percentage Memory Used: $percentage_memory_used%"
 echo "Percentage Memory Free: $percentage_memory_free%"
 echo
 
-echo "Total Disk Used: $disk_used GB"
-echo "Total Disk Free: $disk_free GB"
+echo "Total Disk Used: $disk_used"
+echo "Total Disk Free: $disk_free"
 echo "Percentage Disk Used: $percentage_disk_used"
 echo "Percentage Disk Free: $percentage_disk_free"
 echo
